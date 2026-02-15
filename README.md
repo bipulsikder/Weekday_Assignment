@@ -14,7 +14,7 @@ Target scale: 1 L sign-ups, 10 k DAU, < $150 / month.
 - [ ] Worker container (Fly.io free tier)  
 - [ ] All env vars set  
 - [ ] DB migrations pushed  
-- [ ] Worker running  
+- [ ] Worker running  
 - [ ] Health probe green  
 - [ ] Load test 1 k concurrent  
 
@@ -22,16 +22,16 @@ Target scale: 1 L sign-ups, 10 k DAU, < $150 / month.
 
 ## 1.  Infrastructure (no Site24x7)
 
-| Service | Plan | Monthly Cost | Purpose |
-|---------|------|--------------|---------|
-| Vercel | Pro | $20 | Next.js hosting |
-| Supabase | Pro | $25 | Postgres, Auth, Storage |
-| Upstash Redis | 1 GB | $0 | Rate-limit, cache, queue |
-| Sentry | Team | $0 (< 50 k errors) | Error tracking |
-| Postmark | 10 k emails | $0 | Transactional email |
-| Google Gemini | PAYG | ~$20 (1 M tokens) | Resume parsing |
-| Fly.io | 1 shared-CPU | $0 (< 230 h) | Worker container |
-| **Total** | | **~$65** | |
+| Service | Plan | Monthly Cost | Purpose | Why we chose it |
+|---------|------|--------------|---------|-----------------|
+| **Vercel** | Pro | $20 | Next.js hosting | Serverless auto-scales to 100 k req/min; zero-downtime deploys; global CDN built-in |
+| **Supabase** | Pro | $25 | Postgres, Auth, Storage | Managed Postgres with 60-connection pool, row-level security, free 8 GB RAM; Auth handles JWT & social login |
+| **Upstash Redis** | 1 GB | $0 | Rate-limit, cache, queue | HTTP-based Redis (no conn limit), pay-per-request; 1 GB free tier covers 10 k DAU |
+| **Sentry** | Team | $0 (< 50 k errors) | Error tracking | Auto-captures exceptions, cron heartbeats, Slack alerts; free 50 k events/mo |
+| **Postmark** | 10 k emails | $0 | Transactional email | Best deliverability for Indian ISPs; 10 k free emails/mo; bounce webhooks |
+| **Google Gemini** | PAYG | ~$20 (1 M tokens) | Resume parsing | Cheapest multi-language model; ₹0.005 per resume; fallback to OpenRouter |
+| **Fly.io** | 1 shared-CPU | $0 (< 230 h) | Worker container | Keeps container warm (no cold-start); Mumbai region; free 230 h/mo |
+| **Total** | | **~$65** | | |
 
 ---
 
